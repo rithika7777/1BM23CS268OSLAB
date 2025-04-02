@@ -35,8 +35,7 @@ void preemptivePriorityScheduling(int n, int burst_time[], int arrival_time[], i
             }
         }
 
-
-        if (next_process != -1) {
+           if (next_process != -1) {
             remaining_time[next_process]--;
             current_time++;
 
@@ -128,4 +127,40 @@ int main() {
 
     return 0;
 }
+OUTPUT:
+Enter details for Process 2:
+Arrival Time: 1
+Burst Time: 2
+Priority: 2
+
+Enter details for Process 3:
+Arrival Time: 3
+Burst Time: 34
+Priority: 34
+
+Enter details for Process 4:
+Arrival Time: 342
+Burst Time: 5
+Priority: 53
+
+Enter details for Process 5:
+Arrival Time: 534
+Burst Time: 2
+Priority: 1
+
+Select Scheduling Algorithm:
+1. Preemptive Priority Scheduling
+2. Non-Preemptive Priority Scheduling
+1
+
+Average Turnaround Time: 10.00
+Average Waiting Time: 0.80
+
+2
+
+Average Turnaround Time: 6.60
+Average Waiting Time: 3.40
+Press any key to continue.Process returned 0 (0x0)   execution time : 37.082 s
+Press any key to continue.
+
 
