@@ -65,4 +65,30 @@ int main() {
     roundRobin(n, arrival, burst, quantum);
 
     return 0;
-}
+} 
+OUTPUT:
+Enter the number of processes: 4
+Enter process details (Arrival Time and Burst Time):
+Process 1 Arrival Time: 0
+Process 1 Burst Time: 3
+Process 2 Arrival Time: 1
+Process 2 Burst Time: 2
+Process 3 Arrival Time: 2
+Process 3 Burst Time: 4
+Process 4 Arrival Time: 3
+Process 4 Burst Time: 5
+Enter Time Quantum: 2
+
+Process  Arrival  Burst  Completion  Turnaround  Waiting
+  P1       0       3        9         9        6
+  P2       1       2        4         3        1
+  P3       2       4        11         9        5
+  P4       3       5        14         11        6
+
+Average Turnaround Time: 8.00
+Average Waiting Time: 4.50
+
+Process returned 0 (0x0)   execution time : 28.518 s
+Press any key to continue.
+
+
