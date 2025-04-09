@@ -1,0 +1,89 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define PHILOSOPHERS 5
+
+int forks[PHILOSOPHERS] = {1, 1, 1, 1, 1}; // 1 = available
+
+void eat(int id) {
+    int left = id;
+    int right = (id + 1) % PHILOSOPHERS;
+
+    if (forks[left] && forks[right]) {
+        forks[left] = forks[right] = 0; // pick up forks
+        printf("Philosopher %d is eating.\n", id);
+        forks[left] = forks[right] = 1; // put down forks
+    } else {
+        printf("Philosopher %d is waiting for forks.\n", id);
+    }
+}
+
+int main() {
+    int choice, id;
+
+    while (1) {
+        printf("\n--- DINING PHILOSOPHERS MENU ---\n");
+        printf("1. Philosopher Try to Eat\n");
+        printf("2. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 1:
+                printf("Enter Philosopher ID (0-%d): ", PHILOSOPHERS - 1);
+                scanf("%d", &id);
+                if (id >= 0 && id < PHILOSOPHERS) {
+                    eat(id);
+                } else {
+                    printf("Invalid philosopher ID!\n");
+                }
+                break;
+            case 2:
+                printf("Exiting Dining Philosophers Program.\n");
+                exit(0);
+            default:
+                printf("Invalid choice! Try again.\n");
+        }
+    }
+
+    return 0;
+} 
+OUTPUT:
+--- DINING PHILOSOPHERS MENU ---
+1. Philosopher Try to Eat
+2. Exit
+Enter your choice: 1
+Enter Philosopher ID (0-4): 3
+Philosopher 3 is eating.
+
+--- DINING PHILOSOPHERS MENU ---
+1. Philosopher Try to Eat
+2. Exit
+Enter your choice: 1
+Enter Philosopher ID (0-4): 0
+Philosopher 0 is eating.
+
+--- DINING PHILOSOPHERS MENU ---
+1. Philosopher Try to Eat
+2. Exit
+Enter your choice: 1
+Enter Philosopher ID (0-4): 4
+Philosopher 4 is eating.
+
+--- DINING PHILOSOPHERS MENU ---
+1. Philosopher Try to Eat
+2. Exit
+Enter your choice: 1
+Enter Philosopher ID (0-4): 2
+Philosopher 2 is eating.
+
+--- DINING PHILOSOPHERS MENU ---
+1. Philosopher Try to Eat
+2. Exit
+Enter your choice: 2
+Exiting Dining Philosophers Program.
+
+Process returned 0 (0x0)   execution time : 28.766 s
+Press any key to continue.
+
+
