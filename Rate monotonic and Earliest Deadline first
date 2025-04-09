@@ -1,0 +1,135 @@
+#include <stdio.h>
+#include <math.h>
+
+int gcd(int a, int b) {
+    if (b == 0) return a;
+    return gcd(b, a % b);
+}
+
+int lcm(int a, int b) {
+    return (a * b) / gcd(a, b);
+}
+
+int main() {
+    int n, i;
+    int burst[10], period[10], deadline[10];
+
+
+    printf("Enter the number of processes:");
+    scanf("%d", &n);
+
+    printf("Enter the CPU burst times:\n");
+    for (i = 0; i < n; i++) {
+        scanf("%d", &burst[i]);
+    }
+
+    printf("Enter the time periods:\n");
+    for (i = 0; i < n; i++) {
+        scanf("%d", &period[i]);
+    }
+
+    int L = period[0];
+    for (i = 1; i < n; i++) {
+        L = lcm(L, period[i]);
+    }
+
+    printf("LCM=%d\n\n", L);
+
+    printf("Rate Monotone Scheduling:\n");
+    printf("PID\tBurst\tPeriod\n");
+    for (i = 0; i < n; i++) {
+        printf("%d\t%d\t%d\n", i+1, burst[i], period[i]);
+    }
+
+    float utilization = 0.0;
+    for (i = 0; i < n; i++) {
+        utilization += (float)burst[i] / period[i];
+    }
+
+    float bound = n * (pow(2, 1.0/n) - 1);
+    printf("\n%.6f <= %.6f => %s\n", utilization, bound, (utilization <= bound) ? "true" : "false");
+
+
+    printf("\nEnter the number of processes:");
+    scanf("%d", &n);
+
+    printf("Enter the CPU burst times:\n");
+    for (i = 0; i < n; i++) {
+        scanf("%d", &burst[i]);
+    }
+
+    printf("Enter the deadlines:\n");
+    for (i = 0; i < n; i++) {
+        scanf("%d", &deadline[i]);
+    }
+
+    printf("Enter the time periods:\n");
+    for (i = 0; i < n; i++) {
+        scanf("%d", &period[i]);
+    }
+
+    printf("\nEarliest Deadline Scheduling:\n");
+    printf("PID\tBurst\tDeadline\n");
+    for (i = 0; i < n; i++) {
+        printf("%d\t%d\t%d\n", i+1, burst[i], deadline[i]);
+    }
+
+    printf("Scheduling occurs for 6 ms\n");
+    for (int t = 0; t < 6; t++) {
+        int min_deadline = 999, idx = -1;
+        for (i = 0; i < n; i++) {
+            if (burst[i] > 0 && deadline[i] < min_deadline) {
+                min_deadline = deadline[i];
+                idx = i;
+            }
+        }
+
+        if (idx != -1) {
+            burst[idx]--;
+            printf("%dms : Task %d is running.\n", t, idx + 1);
+        }
+    }
+
+    return 0;
+}
+
+OUTPUT:
+Enter the number of processes:3
+Enter the CPU burst times:
+2 3 4
+Enter the time periods:
+1 2 3
+LCM=6
+
+Rate Monotone Scheduling:
+PID     Burst   Period
+1       2       1
+2       3       2
+3       4       3
+
+4.833333 <= 0.779763 => false
+
+Enter the number of processes:3
+Enter the CPU burst times:
+2 3 4
+Enter the deadlines:
+1 2 3
+Enter the time periods:
+1 2 3
+
+Earliest Deadline Scheduling:
+PID     Burst   Deadline
+1       2       1
+2       3       2
+3       4       3
+Scheduling occurs for 6 ms
+0ms : Task 1 is running.
+1ms : Task 1 is running.
+2ms : Task 2 is running.
+3ms : Task 2 is running.
+4ms : Task 2 is running.
+5ms : Task 3 is running.
+
+Process returned 0 (0x0)   execution time : 677.762 s
+Press any key to continue.
+
