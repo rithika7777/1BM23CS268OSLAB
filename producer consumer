@@ -58,4 +58,29 @@ int main() {
 
     return 0;
 }
+OUTPUT:
+--- PRODUCER-CONSUMER MENU ---
+1. Produce Item
+2. Consume Item
+3. Exit
+Enter your choice: 1
+Enter item to produce: 2
+Produced: 2
+
+--- PRODUCER-CONSUMER MENU ---
+1. Produce Item
+2. Consume Item
+3. Exit
+Enter your choice: 2
+Consumed: 2
+
+--- PRODUCER-CONSUMER MENU ---
+1. Produce Item
+2. Consume Item
+3. Exit
+Enter your choice: 3
+Exiting Producer-Consumer Program.
+
+Process returned 0 (0x0)   execution time : 26.157 s
+Press any key to continue.
 
