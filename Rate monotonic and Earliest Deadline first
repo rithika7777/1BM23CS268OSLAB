@@ -94,42 +94,41 @@ int main() {
 }
 
 OUTPUT:
-Enter the number of processes:3
-Enter the CPU burst times:
-2 3 4
+Enter the number of processes:2
+Enter the burst time:
+1 2
 Enter the time periods:
-1 2 3
-LCM=6
+3
+4
+LCM=12
 
 Rate Monotone Scheduling:
 PID     Burst   Period
-1       2       1
-2       3       2
-3       4       3
+1       1       3
+2       2       4
 
-4.833333 <= 0.779763 => false
+0.833333 <= 0.828427 => false
 
 Enter the number of processes:3
-Enter the CPU burst times:
-2 3 4
+Enter the burst times:
+1 2 3
 Enter the deadlines:
-1 2 3
+2 3 6
 Enter the time periods:
-1 2 3
+3 7 2
 
 Earliest Deadline Scheduling:
 PID     Burst   Deadline
-1       2       1
-2       3       2
-3       4       3
+1       1       2
+2       2       3
+3       3       6
 Scheduling occurs for 6 ms
 0ms : Task 1 is running.
-1ms : Task 1 is running.
+1ms : Task 2 is running.
 2ms : Task 2 is running.
-3ms : Task 2 is running.
-4ms : Task 2 is running.
+3ms : Task 3 is running.
+4ms : Task 3 is running.
 5ms : Task 3 is running.
 
-Process returned 0 (0x0)   execution time : 677.762 s
+Process returned 0 (0x0)   execution time : 33.299 s
 Press any key to continue.
-
