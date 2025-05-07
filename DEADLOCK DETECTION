@@ -1,0 +1,116 @@
+#include <stdio.h>
+#include <stdbool.h>
+
+int main() {
+    int n, m;
+
+    printf("Enter the number of processes: ");
+    scanf("%d", &n);
+
+    printf("Enter the number of resources: ");
+    scanf("%d", &m);
+
+    int Allocation[n][m], Request[n][m], Available[m];
+    bool Finish[n];
+
+    printf("Enter the allocation matrix:\n");
+    for (int i = 0; i < n; i++) {
+        printf("Process %d: ", i);
+        for (int j = 0; j < m; j++)
+            scanf("%d", &Allocation[i][j]);
+    }
+
+    printf("Enter the request matrix:\n");
+    for (int i = 0; i < n; i++) {
+        printf("Process %d: ", i);
+        for (int j = 0; j < m; j++)
+            scanf("%d", &Request[i][j]);
+    }
+
+    printf("Enter the available resources: ");
+    for (int i = 0; i < m; i++)
+        scanf("%d", &Available[i]);
+
+    for (int i = 0; i < n; i++)
+        Finish[i] = false;
+
+    int Work[m];
+    for (int i = 0; i < m; i++)
+        Work[i] = Available[i];
+
+    int count = 0;
+    int safeSeq[n];
+
+    while (count < n) {
+        bool found = false;
+
+        for (int i = 0; i < n; i++) {
+            if (!Finish[i]) {
+                bool canExecute = true;
+
+                for (int j = 0; j < m; j++) {
+                    if (Request[i][j] > Work[j]) {
+                        canExecute = false;
+                        break;
+                    }
+                }
+
+                if (canExecute) {
+                    for (int j = 0; j < m; j++)
+                        Work[j] += Allocation[i][j];
+
+                    safeSeq[count++] = i;
+                    Finish[i] = true;
+                    found = true;
+                }
+            }
+        }
+
+        if (!found)
+            break; // Deadlock detected
+    }
+
+    bool safe = true;
+    for (int i = 0; i < n; i++) {
+        if (!Finish[i]) {
+            safe = false;
+            break;
+        }
+    }
+
+    if (safe) {
+        printf("System is in safe state.\n");
+        printf("Safe Sequence is: ");
+        for (int i = 0; i < n; i++)
+            printf("P%d ", safeSeq[i]);
+        printf("\n");
+    } else {
+        printf("System is in deadlock state.\n");
+        printf("Deadlocked processes: ");
+        for (int i = 0; i < n; i++)
+            if (!Finish[i])
+                printf("P%d ", i);
+        printf("\n");
+    }
+
+    return 0;
+}
+OUTPUT:
+Enter the number of processes: 4
+Enter the number of resources: 3
+Enter the allocation matrix:
+Process 0: 1 2 0
+Process 1: 2 3 4
+Process 2: 2 5 6
+Process 3: 0 0 2
+Enter the request matrix:
+Process 0: 3 3 0
+Process 1: 2 4 5
+Process 2: 2 0 0
+Process 3: 1 2 5
+Enter the available resources: 12 3 4
+System is in safe state.
+Safe Sequence is: P0 P2 P3 P1
+
+Process returned 0 (0x0)   execution time : 42.351 s
+Press any key to continue.
