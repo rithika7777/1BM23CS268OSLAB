@@ -1,0 +1,75 @@
+#include <stdio.h>
+
+int main() {
+    int numBlocks, numProcesses;
+
+    // Input the number of memory blocks and their sizes
+    printf("Enter the number of memory blocks: ");
+    scanf("%d", &numBlocks);
+
+    int blockSizes[numBlocks];  // Array to store block sizes
+    int blockStatus[numBlocks]; // Array to track if a block is allocated (1: allocated, 0: free)
+
+    for (int i = 0; i < numBlocks; i++) {
+        printf("Block %d size: ", i + 1);
+        scanf("%d", &blockSizes[i]);
+        blockStatus[i] = 0;  // Initially, all blocks are free
+    }
+
+    // Input the number of processes and their sizes
+    printf("Enter the number of processes: ");
+    scanf("%d", &numProcesses);
+
+    int processSizes[numProcesses];  // Array to store process sizes
+    int blockAssigned[numProcesses]; // Array to track which block a process is assigned to
+
+    for (int i = 0; i < numProcesses; i++) {
+        printf("Process %d size: ", i + 1);
+        scanf("%d", &processSizes[i]);
+        blockAssigned[i] = -1;  // Initially, no process is allocated a block
+    }
+
+    // Perform First Fit allocation
+    printf("\nProcess No      Process Size    Block No        Block Size Left\n");
+    printf("---------------------------------------------------------------\n");
+
+    for (int i = 0; i < numProcesses; i++) {
+        int allocated = 0;
+
+        // Search for the first block that can accommodate the process
+        for (int j = 0; j < numBlocks; j++) {
+            if (blockStatus[j] == 0 && blockSizes[j] >= processSizes[i]) {
+                blockSizes[j] -= processSizes[i]; // Reduce the block size
+                blockStatus[j] = 1; // Mark block as allocated
+                blockAssigned[i] = j; // Assign the block to the process
+                printf("%-15d%-15d%-15d%-15d\n", i + 1, processSizes[i], j + 1, blockSizes[j]);
+                allocated = 1;
+                break;
+            }
+        }
+
+        if (!allocated) {
+            printf("%-15d%-15d%-15s%-15s\n", i + 1, processSizes[i], "Not Allocated", "-");
+        }
+    }
+
+    return 0;
+}
+OUTPUT:
+Enter the number of memory blocks: 3
+Block 1 size: 20
+Block 2 size: 30
+Block 3 size: 29
+Enter the number of processes: 3
+Process 1 size: 23
+Process 2 size: 15
+Process 3 size: 13
+
+Process No      Process Size    Block No        Block Size Left
+---------------------------------------------------------------
+1              23             2              7
+2              15             1              5
+3              13             3              16
+
+Process returned 0 (0x0)   execution time : 20.016 s
+Press any key to continue.
